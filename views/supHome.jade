@@ -1,0 +1,65 @@
+extends layout
+
+block content
+ .container
+    h1 Supplier Home
+    p Welcome to the suppliers area
+        <br>
+     if errors
+         each error, i in errors
+             div.alert.alert-danger #{error.msg}
+     h3
+        a(href='/servHome') Go To Services
+     div
+        h2 Add Item
+        form(method ='post', action='/users/addItem')
+
+            .form-group
+            label TYPE
+            input.form-control(name='type',type='text',
+            placeholder='Enter name/type')
+            .form-group
+            label PRICE
+            input.form-control(name='price',type='text',
+            placeholder='Enter price')
+            .form-group
+            label DESCRIPTION
+            input.form-control(name='description',type='text',
+            placeholder='Describe your item')
+            .form-group
+            label STOCK
+            input.form-control(name='stockno',type='text',
+            placeholder='Stock Number')
+
+
+            .form-group
+            input.btn.btn-primary(type = 'submit', name = 'submit',value='ADD!')
+     div
+         h2 Delete Item
+         form(method ='post', action='/users/deleteItem')
+
+             .form-group
+             label TYPE
+             input.form-control(name='type',type='text',
+             placeholder='Enter name/type')
+
+             .form-group
+             input.btn.btn-primary(type = 'submit', name = 'submit',value='DELETE!')
+             <br>
+         h2 All items
+            h4
+                 ul(id = 'showlist').-list-ul.h4
+
+
+        button.btn.btn-primary(onclick ='retrieve()') ALL ITEMS
+
+         script.
+             var retrieve = function () {
+                 $.get('/users/allItems', function (data, status) {
+                     $('#showlist').append(data);
+                 });
+
+             }
+
+
+     .container

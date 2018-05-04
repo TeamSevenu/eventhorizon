@@ -1,0 +1,112 @@
+extends layout
+
+block content
+    .container
+        h1 Services Area
+        p Specialize in the services provided
+            <br>
+        if errors
+            each error, i in errors
+                div.alert.alert-danger #{error.msg}
+
+        div
+            h2 Add Service
+            form(method ='post', action='/users/addService')
+                .form-group
+                label CATEGORY
+                select.form-control(name='status')
+                        option(onclick= 'cater()') Entertainer
+                        option(onclick= 'enter()') Cater
+                        option(onclick= 'staff()') Staff
+
+                .form-group
+                label PRICE
+                input.form-control(name='price',type='text',
+                placeholder='Enter price')
+
+
+                .form-group
+                label ARTIST NAME
+                input.form-control(name='artname',type='text',
+                placeholder='Enter name', disabled="true", id='1')
+
+                .form-group
+                label GENRE
+                input.form-control(name='genre',type='text',
+                placeholder='What is your genre?', disabled="true", id='2')
+
+                .form-group
+                label CUSINE
+                input.form-control(name='cusine',type='text',
+                placeholder='Cusine', disabled="true", id='3')
+                label MENU
+                input.form-control(name='menu', type='file', disabled="true", id='4')
+                label HEADCOUNT
+                input.form-control(name='head',type='text',
+                placeholder='People that can be served', disabled="true", id='5')
+
+                label SPECIALITY
+                input.form-control(name='special',type='text',
+                placeholder='Job Description' , disabled="true", id='6')
+                label WORK HOURS
+                input.form-control(name='hours',type='text',
+                placeholder='Available Hours', disabled="true", id ='7')
+
+                .form-group
+                input.btn.btn-primary(type = 'submit', name = 'submit',value='ADD!')
+        div
+            h2 Delete Service
+            form(method ='post', action='/users/deleteService')
+
+                .form-group
+                label SERVICE
+                input.form-control(name='type',type='text',
+                placeholder='Enter Service')
+
+                .form-group
+                input.btn.btn-primary(type = 'submit', name = 'submit',value='DELETE!')
+        div
+            h2 View Service
+                h4
+                    ul(id = 'showlist').-list-ul.h4
+
+        button.btn.btn-primary(onclick ='retrieve()') ALL SERVICES
+        script.
+            var cater = function () {
+
+                $('#1').prop("disabled", false);
+                $('#2').prop("disabled", false);
+                $('#3').prop("disabled", true);
+                $('#4').prop("disabled", true);
+                $('#5').prop("disabled", true);
+                $('#6').prop("disabled", true);
+                $('#7').prop("disabled", true);
+            }
+
+            var enter = function()
+            {
+                $('#1').prop("disabled", true);
+                $('#2').prop("disabled", true);
+                $('#3').prop("disabled", false);
+                $('#4').prop("disabled", false);
+                $('#5').prop("disabled", false);
+                $('#6').prop("disabled", true);
+                $('#7').prop("disabled", true);
+            }
+            var staff = function ()
+            {
+                $('#1').prop("disabled", true);
+                $('#2').prop("disabled", true);
+                $('#3').prop("disabled", true);
+                $('#4').prop("disabled", true);
+                $('#5').prop("disabled", true);
+                $('#6').prop("disabled", false);
+                $('#7').prop("disabled", false);
+            }
+            var retrieve = function () {
+                $.get('/users/allServices', function (data, status) {
+                    $('#showlist').append(data);
+                });
+
+            }
+    .container

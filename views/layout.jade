@@ -1,0 +1,45 @@
+doctype html
+html(lang='en')
+    head
+        title Welcome
+        link(href='/stylesheets/bootstrap.css', rel='stylesheet')
+        link(href='/stylesheets/style.css', rel='stylesheet')
+    body
+    div
+        .navbar.navbar-default(role='navigation')
+            .container
+                .navbar-header
+                    button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bars
+                    a.navbar-brand(href='/') Event Horizon
+                .navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        if user
+                            li(class=(title == 'Organizers' ? 'active' : ''))
+                                a(href='/HomePage') Organizer
+                        if !user
+                            li(class=(title == 'Register' ? 'active' : ''))
+                                a(href='/users/register') Register
+                            li(class=(title == 'Login' ? 'active' : ''))
+                                 a(href='/users/login') Login
+                        if user
+                            li(class=(title == 'Customer' ? 'active' : ''))
+                                a(href='/custHome') Customer
+                        if user
+                            li(class=(title == 'Supplier' ? 'active' : ''))
+                                a(href='/supHome') Supplier
+                    ul.nav.navbar-nav.navbar-right
+                        if user
+                            li(class=(title == 'Logout' ? 'active' : ''))
+                                a(href='/users/logout') Logout
+
+
+        .container
+        !=messages()
+        block content
+
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+        script(src='/javascripts/bootstrap.js')

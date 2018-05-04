@@ -1,0 +1,64 @@
+extends layout
+
+block content
+ .container
+    h1 Organizer Area
+    p Welcome to the organizers area
+
+        h2.page-header Create Event
+        p Please enter event details below
+        if errors
+            each error, i in errors
+                div.alert.alert-danger #{error.msg}
+        form(method ='post', action='/users/create',enctype='multipart/form-data')
+            .form-group
+            label EVENT NAME
+            input.form-control(name='name',type='text',
+            placeholder='Enter event name')
+
+            .form-group
+            label VENUE
+            input.form-control(name='venue',type='text',
+            placeholder='Enter location')
+
+            .form-group
+            label DATE
+            input.form-control(name='date',type='date',
+            placeholder='Enter date')
+
+            .form-group
+            label STATUS
+            select.form-control(name='status')
+                    option Active
+                    option Laters
+
+            .form-group
+            label IMAGE
+            input.form-control(name='profile', type='file')
+
+            .form-group
+            input.btn.btn-primary(type = 'submit', name = 'submit',value='CREATE!')
+
+      div
+            table.table-primary.table-bordered.table
+                thead
+                        tr
+                            td.h2 Events Organized
+
+                tbody(id = 'table')
+
+
+
+
+            button.btn.btn-primary(onclick ='retrieve()') GET HISTORY
+
+         script.
+             var retrieve = function(){
+                 $.get('/users/history', function(data, status)
+                 {
+                    $('#table').append(data);
+                 });
+
+             }
+
+  .container
