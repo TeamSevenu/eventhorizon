@@ -6,11 +6,15 @@ var db = mongoose.connection;
 
 var ServiceScheme = mongoose.Schema({
 
+    title:{
+        type:String,
+
+    },
     type:{
         type:String,
     },
     price:{
-        type: String
+        type: Number
     },
     artist:{
         type: String
@@ -28,7 +32,7 @@ var ServiceScheme = mongoose.Schema({
         type: String
     },
     hours:{
-        type: String
+        type: Number
     },
     organizer:{
         type:String,

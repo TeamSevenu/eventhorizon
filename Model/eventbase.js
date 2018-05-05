@@ -22,6 +22,12 @@ var EventSchema = mongoose.Schema({
     status: {
         type: String
     },
+    seats:{
+        type:Number
+    },
+    price:{
+        type:Number
+    },
     organizer:{
         type: String
     }

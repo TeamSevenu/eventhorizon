@@ -35,16 +35,7 @@ class Item {
 
 
     deleteItem(keyword){
-        MongoClient.connect(url, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db("mydb");
-            var myquery = { address: 'keyword' };
-            dbo.collection("itembas").deleteOne(myquery, function(err, obj) {
-                if (err) throw err;
-                console.log("1 document deleted");
-                db.close();
-            });
-        });
+
     }
 }
 

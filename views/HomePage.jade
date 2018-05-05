@@ -33,32 +33,71 @@ block content
                     option Laters
 
             .form-group
+            label TICKETS
+            input.form-control(name='ticket',type='text',
+            placeholder='Enter number of supported people')
+
+            .form-group
+            label PRICE
+            input.form-control(name='price',type='text',
+            placeholder='Price per ticket')
+
+            .form-group
             label IMAGE
             input.form-control(name='profile', type='file')
+
+            .form.group
+            label SERVICES
+            div.panel.panel-success.panel-collapse
+                h4.panel.body
+                h4(id ='service')
+
 
             .form-group
             input.btn.btn-primary(type = 'submit', name = 'submit',value='CREATE!')
 
-      div
+       button.btn.btn-secondary(onclick ='offer()') ITEMS | SERVICES
+
+
+     div
             table.table-primary.table-bordered.table
                 thead
                         tr
-                            td.h2 Events Organized
+                            td.h2 Past Events
 
-                tbody(id = 'table')
-
-
+                tbody.h4(id = 'table')
 
 
-            button.btn.btn-primary(onclick ='retrieve()') GET HISTORY
-
+          button.btn.btn-primary(onclick ='retrieve()') GET HISTORY
          script.
-             var retrieve = function(){
-                 $.get('/users/history', function(data, status)
-                 {
-                    $('#table').append(data);
+             var retrieve = function () {
+                 $.get('/users/history', function (data, status) {
+                     var obj = $.parseJSON(data);
+
+                     var i = 0;
+                     while (i < 20) {
+                         $('#table').append('EVENT: ' + obj[i].name + ' AT LOCATION ' + obj[i].venue + ' IS CURRENTLY ' + obj[i].status + '<br> ');
+                         i++;
+                     }
+
+
                  });
 
              }
+
+              var offer = function(){
+                  $.get('/users/serviceCollection ', function (data, status) {
+                      var obj = $.parseJSON(data);
+
+                      var i = 0;
+
+                      while (i < 20) {
+                          $('#service').append(obj[i].title + ' - ' + obj[i].type + '<br>');
+                          i++;
+                      }
+                  })
+              };
+
+
 
   .container

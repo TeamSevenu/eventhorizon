@@ -9,28 +9,149 @@ block content
                 div.alert.alert-danger #{error.msg}
      div
         h2 Find Events
-        form(method ='post', action='/users/search')
+        form(id='myform' method = 'post' action ='/users/search')
+           .form-group
+            label KEYWORD
+            input.form-control(name='keyword',type='text',placeholder='Enter search term', id= 'value')
             .form-group
-            label SEARCH TERMS
-            input.form-control(name='keyword',type='text',placeholder='Enter username')
-            .form-group
-            input.btn.btn-primary(type = 'submit', name = 'submit',value='SEARCH!')
+            input.btn.btn-primary(type = 'submit', name = 'submit',value='SEARCH')
+         button.btn.btn-secondary(onclick ='search()') VIEW
+            <br>
+     div
+         h2 View Events
+                 h4
+                     span(id = 'view') ----------------------------------
+     div
+         h2 Buy Tickets
+             h3 Number of Tickets:
+                 h4
+                     span(id = 'tickets') 0
 
+     button.btn.btn-success(onclick ='add()') +
+
+     button.btn.btn-danger(onclick = 'sub()') -
+
+     <br>
+     div.panel.panel-primary
+         h3.panel.panel-body Purchase Summary
+            h4(id = 'event')
+            h4(id = 'price')
+     button.btn.btn-primary(onclick ='buy()') BUY TICKETS
+     <br>
      div
          h2 All Events
-            h4
-                ul(id = 'showlist').-list-ul.h4
+         table.table-primary.table-bordered.table
+             thead
+                         tbody
+                                tr
+                                    td.h3 Name
+                                    td.h3 Venue
+                                    td.h3 Price
+                                    td.h3 Date
+                                tr
+                                    td.h4(id = 'showname')
+                                    td.h4(id = 'showven')
+                                    td.h4(id = 'showprice')
+                                    td.h4(id = 'showdate')
+
+     button.btn.btn-primary(onclick ='retrieve()') VIEW ALL
+
+     div
+         h2 Transaction History
+         table.table-primary.table-bordered.table
+             thead
+                 tbody
+                     tr
+                         td.h3 Name
+                         td.h3 Total Price
+                     tr
+                         td.h4(id = 'showtitle')
+                         td.h4(id = 'showtotal')
+
+     button.btn.btn-primary(onclick ='show()') SHOW PURCHASES
 
 
-        button.btn.btn-primary(onclick ='retrieve()') SHOW ALL
 
+
+        script("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
         script.
                     var retrieve = function () {
                         $.get('/users/allEvents', function (data, status) {
-                            $('#showlist').append(data);
+                            var obj = $.parseJSON(data);
+
+                            var i =0;
+                            while(i < 20){
+                                $('#showname').append(obj[i].name +'<br>');
+                                $('#showven').append(obj[i].venue + '<br>' );
+                                $('#showprice').append(obj[i].price + '.00$' + '<br>' );
+                                $('#showdate').append(obj[i].date +'<br>' );
+                                i++;
+                            }
+
+
+                        });
+
+                    }
+                    var price =0;
+                    var name = 0;
+                    var search = function () {
+                        $.get('/users/searchResult', function (data, status) {
+                                var obj = $.parseJSON(data);
+                                $('#view').text('Found ' + obj[0].name + ' on ' + obj[0].date + ' for $' + obj[0].price + '.00 at ' + obj[0].venue);
+                                $('#event').text('Event Chosen:' + obj[0].name +' at ' +obj[0].venue);
+                                price = obj[0].price;
+                                name = obj[0].name;
                         });
 
                     }
 
+                    var tickets =0;
+                    var money =0;
+                    var add = function(){
+                        if (tickets < 20) {
+                            tickets += 1;
+                        }
+                        $('#tickets').text(tickets);
+                        money = tickets * price;
+                        $('#price').text('Total Amount = ' + money + '.00$');
+                    }
 
+                    var sub= function () {
+                        if(tickets >0){
+                            tickets -= 1;
+                        }
+                        $('#tickets').text(tickets);
+                        money = tickets * price;
+                        $('#price').text('Total Amount = ' + money + '.00$');
+                    }
+
+                    var buy = function() {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/users/buyTicket',
+                            data: {
+                                'name': name,
+                                'number': tickets,
+                                'price': money
+                            },
+                            success: function (msg) {
+                                alert('Authorized with your Bank!');
+                            }
+                        });
+                    }
+
+                    var show = function () {
+                        $.get('/users/showTickets', function (data, status) {
+                            var obj = $.parseJSON(data);
+                            var i = 0;
+                            while (i < 10) {
+                                $('#showtitle').append(obj[i].name + '<br>');
+                                $('#showtotal').append(obj[i].price + '.00$' + '<br>');
+                                i++;
+                            }
+
+                        });
+
+                    }
      .container

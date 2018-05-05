@@ -16,6 +16,7 @@ var userdatabase = require('../Model/userdatabase.js');
 var eventbase = require('../Model/eventbase.js');
 var servicebase = require('../Model/servicebase.js');
 var itembas = require('../Model/itembas.js');
+var ticketbase = require('../Model/ticketbase.js');
 
 //CLASSES//
 //1) User Class
@@ -47,11 +48,6 @@ router.get('/register', function(req, res, next) {
   res.render('register',{title:'Register'});
 });
 
-//TESTING PATH///
-router.get('/test', function(req, res, next)
-{
-
-});
 
 router.get('/login', function(req, res, next) {
     res.render('login', {title:'Login'});
@@ -171,7 +167,9 @@ router.post('/create', urlencodedParser, upload.single('profile'),function(req, 
             venue: event1.getVenue(),
             date:event1.getDate(),
             status:event1.getStatus(),
-            organizer: event1.getOrg()
+            seats: req.body.ticket,
+            organizer: event1.getOrg(),
+            price: req.body.price
     });
 
         eventbase.createEvent(newEvent, function(error, user){
@@ -189,20 +187,30 @@ router.post('/create', urlencodedParser, upload.single('profile'),function(req, 
 });
 
 //SEARCHING MONGODB
-
+var searchResult = null;
 router.post('/search', urlencodedParser, function(req, res)
 {
-    //searchObject.sarchEvents(req.body.keyword);
+    searchResult=req.body.keyword;
+    req.flash('success', 'View now please');
+    res.location('/custHome');
+    res.redirect('/custHome');
+});
+
+router.get('/searchResult', function(req, res)
+{
+
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("nodeauth");
-        var query = {name: req.body.keyword};
+        var query = {name: searchResult};
         dbo.collection("eventbases").find(query).toArray(function(err, result) {
             if (err) throw err;
             console.log(result);
+            res.send(JSON.stringify(result));
             db.close();
         });
     });
+
 });
 
 router.get('/history', function(req, res)
@@ -230,9 +238,8 @@ router.get('/allEvents', function(req, res)
         var dbo = db.db("nodeauth");
         dbo.collection("eventbases").find().toArray(function(err, result) {
             if (err) throw err;
-            db.close();
             res.send(JSON.stringify(result));
-            console.log(result);
+            db.close();
         });
     });
 });
@@ -263,16 +270,23 @@ router.post('/addItem', urlencodedParser ,function(req, res, next) {
 
 router.post('/deleteItem', urlencodedParser, function(req, res)
 {
-    var item1 = new item();
-    item1.deleteItem(req.body.type);
-    req.flash('success', 'SUCCESS!!! ITEM DELETED!');
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("nodeauth");
+        var myquery = { Type:req.body.type, Owner:req.user.username};
+        dbo.collection("itembas").deleteOne(myquery, function(err, obj) {
+            if (err) throw err;
+            req.flash('success', 'SUCCESS!!! ITEM DELETED!');
+            db.close();
+        });
+    });
+
     res.location('/supHome');
     res.redirect('/supHome');
 });
 
 router.get('/allItems', function(req, res)
 {
-    //searchObject.showEvents();
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("nodeauth");
@@ -301,7 +315,7 @@ router.post('/addService', urlencodedParser ,function(req, res, next) {
         {
             var newEvent = new servicebase({
 
-
+                title:req.body.title,
                 type:req.body.status,
                 price:req.body.price,
                 artist:req.body.artname,
@@ -318,9 +332,10 @@ router.post('/addService', urlencodedParser ,function(req, res, next) {
                 console.log(user);
             });
         }
-        else if(req.body.status == 'Caterer') {
+        else if(req.body.status == 'Cater') {
             var newEvent = new servicebase({
 
+                title:req.body.title,
                 type:req.body.status,
                 price:req.body.price,
                 artist:null,
@@ -340,6 +355,7 @@ router.post('/addService', urlencodedParser ,function(req, res, next) {
         {
             var newEvent = new servicebase({
 
+                title:req.body.title,
                 type:req.body.status,
                 price:req.body.price,
                 artist:null,
@@ -373,16 +389,16 @@ router.post('/deleteService', urlencodedParser, function(req, res)
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("nodeauth");
-        var myquery = { type: req.body.type };
-        dbo.collection("servicebase").deleteMany(myquery, function(err, obj) {
+        var myquery = { title:req.body.type, organizer:req.user.username};
+        dbo.collection("servicebases").deleteOne(myquery, function(err, obj) {
             if (err) throw err;
-            console.log("1 document deleted");
+            req.flash('success', 'SUCCESS!!! SERVICE DELETED!');
             db.close();
         });
     });
-    req.flash('success', 'SUCCESS!!! ITEM DELETED!');
-    res.location('/supHome');
-    res.redirect('/supHome');
+
+    res.location('/servHome');
+    res.redirect('/servHome');
 });
 
 router.get('/allServices', function(req, res)
@@ -393,6 +409,70 @@ router.get('/allServices', function(req, res)
         var dbo = db.db("nodeauth");
         var query = {organizer: req.user.username };
         dbo.collection("servicebases").find(query).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.send(JSON.stringify(result));
+            db.close();
+        });
+    });
+});
+
+
+router.post('/buyTicket', urlencodedParser, function(req, res)
+{
+
+    var errors = req.validationErrors();
+    if(errors)
+    {
+        res.render('HomePage',{errors:errors});
+    }
+    else {
+
+        //Creating Database Entry
+        var newEvent = new ticketbase({
+
+            name: req.body.name,
+            number: req.body.number,
+            price:req.body.price,
+            customer: req.user.username
+
+        });
+
+        ticketbase.createTicket(newEvent, function(error, user){
+            if(error)throw error;
+            console.log(user);
+        });
+
+        //REDIRECTION TO A DIFFERENT ROUTE
+        res.location('/custHome');
+        res.redirect('/custHome');
+    }
+
+
+});
+
+router.get('/showTickets', function(req, res)
+{
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("nodeauth");
+        var query = {customer: req.user.username};
+        dbo.collection("ticketbases").find(query).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.send(JSON.stringify(result));
+            db.close();
+        });
+    });
+});
+
+router.get('/serviceCollection', function(req, res)
+{
+    //searchObject.showEvents();
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("nodeauth");
+        dbo.collection("servicebases").find().toArray(function(err, result) {
             if (err) throw err;
             console.log(result);
             res.send(JSON.stringify(result));

@@ -50,13 +50,32 @@ block content
             h4
                  ul(id = 'showlist').-list-ul.h4
 
-
+     div
+         h2 Supply Inventory
+             table.table-primary.table-bordered.table
+                 thead
+                     tbody
+                         tr
+                             td.h3 Type
+                             td.h3 Stock
+                             td.h3 Price
+                         tr
+                             td.h4(id = 'showname')
+                             td.h4(id = 'showcat')
+                             td.h4(id = 'showprice')
         button.btn.btn-primary(onclick ='retrieve()') ALL ITEMS
 
          script.
              var retrieve = function () {
                  $.get('/users/allItems', function (data, status) {
-                     $('#showlist').append(data);
+                     var obj = $.parseJSON(data);
+                     var i = 0;
+                     while (i < 10) {
+                         $('#showname').append(obj[i].Type + '<br>');
+                         $('#showcat').append(obj[i].Stock + '<br>');
+                         $('#showprice').append(obj[i].Price + '.00$' + '<br>');
+                         i++;
+                     }
                  });
 
              }
