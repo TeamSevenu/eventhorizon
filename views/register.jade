@@ -1,5 +1,6 @@
 extends layout
 
+//THIS PAGE DEALS WITH REGISTRATION INFORMATION WHICH THE USER IS REQUIRED TO INPUT
 block content
   .container
     h2.page-header Register
@@ -7,6 +8,7 @@ block content
     if errors
         each error, i in errors
             div.alert.alert-danger #{error.msg}
+        //THIS FORMS SENDS A POST TO THE SERVER CONTAINING THE INFORMATION ENTERED BY THE USER TO CREATE AN ACCOUNT
      form(method ='post', action='/users/register')
         .form-group
         label NAME
@@ -34,9 +36,9 @@ block content
         placeholder='Confirm password')
 
         .form-group
-        label USER TYPE
-        select.form-control(name='type')
-            option Default
+        label PHONE
+        input.form-control(name="phone", type="text",
+        placeholder="Enter mobile number")
 
 
         .form-group

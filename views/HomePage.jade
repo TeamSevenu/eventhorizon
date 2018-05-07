@@ -4,9 +4,9 @@ block content
  .container
     h1 Organizer Area
     p Welcome to the organizers area
-
+        //CREATE EVENT INFORMATION REQUIRED TO BE INPUT BY THE USER
         h2.page-header Create Event
-        p Please enter event details below
+        p Please enter event details below, * means optional criteria for items and services
         if errors
             each error, i in errors
                 div.alert.alert-danger #{error.msg}
@@ -48,16 +48,16 @@ block content
 
             .form.group
             label SERVICES
-            div.panel.panel-success.panel-collapse
-                h4.panel.body
-                h4(id ='service')
+            select.form-control(name='service', id = "service")
 
-
+            .form.group
+            label ITEMS
+            select.form-control(name='item', id = "items")
+            //THIS BUTTON TRIGGERS THE POST EVENT THAT SENDS THE INFORMATION IN FORMS TO THE SERVER
             .form-group
             input.btn.btn-primary(type = 'submit', name = 'submit',value='CREATE!')
-
-       button.btn.btn-secondary(onclick ='offer()') ITEMS | SERVICES
-
+            //THIS BUTTONS RETRIEVES SERVICES AND ITEMS THAT USER CAN ADD TO THEIR EVENT
+          button.btn.btn-secondary(onclick = 'offer()') *ITEMS | SERVICES AVAILABLE
 
      div
             table.table-primary.table-bordered.table
@@ -67,9 +67,10 @@ block content
 
                 tbody.h4(id = 'table')
 
-
+            //THIS SECTION DISPLAYS TO THE USER THE EVENTS THEY HAVE ORGANIZED
           button.btn.btn-primary(onclick ='retrieve()') GET HISTORY
          script.
+             //THIS FUNCTION SENDS A GET TO RETRIEVE THE HISTORY OF EVENTS ORGANIZED BY THE USER
              var retrieve = function () {
                  $.get('/users/history', function (data, status) {
                      var obj = $.parseJSON(data);
@@ -80,11 +81,10 @@ block content
                          i++;
                      }
 
-
                  });
 
              }
-
+                //THIS FUNCTION SENDS TWO GET REQUESTS, ONE FOR RETRIEVING AVAILABLE SERVICES AND AVAILABLE ITEMS TO ADD TO THE EVENT
               var offer = function(){
                   $.get('/users/serviceCollection ', function (data, status) {
                       var obj = $.parseJSON(data);
@@ -92,9 +92,22 @@ block content
                       var i = 0;
 
                       while (i < 20) {
-                          $('#service').append(obj[i].title + ' - ' + obj[i].type + '<br>');
+                          $('#service').append('<option>' + obj[i].title + ' - ' + obj[i].type + '</option><br>');
                           i++;
                       }
+                  })
+
+                  $.get('/users/itemCollection', function(data, status)
+                  {
+                      var obj = $.parseJSON(data);
+
+                      var i = 0;
+
+                      while (i < 20) {
+                          $('#items').append('<option>' + obj[i].Type + ' - ' + obj[i].Description+ '</option><br>');
+                          i++;
+                      }
+
                   })
               };
 

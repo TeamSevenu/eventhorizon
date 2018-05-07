@@ -1,5 +1,5 @@
 extends layout
-
+//FORM THAT RECEIVES AN USER SEARCH TERM AND RETURNS A MATCHING EVENT
 block content
  .container
     h1 Customer Home
@@ -16,28 +16,48 @@ block content
             .form-group
             input.btn.btn-primary(type = 'submit', name = 'submit',value='SEARCH')
          button.btn.btn-secondary(onclick ='search()') VIEW
+         //THIS BUTTON TRIGGERS THE SEARCHING FUNCTION HANDLED IN THE JS SECTION BELOW
             <br>
+
      div
          h2 View Events
+
                  h4
                      span(id = 'view') ----------------------------------
+     //THIS PART ALLOWS THE USER TO SELECT HOW MANY TICKETS THEY NEED TO BUY FOR THE EVENT
      div
          h2 Buy Tickets
              h3 Number of Tickets:
                  h4
                      span(id = 'tickets') 0
 
+                     //THESE BUTTONS PERFORM ADDITION AND SUBTRACTION BASED ON THE EVENT PRICE AND NUMBER OF TICKETS
      button.btn.btn-success(onclick ='add()') +
 
      button.btn.btn-danger(onclick = 'sub()') -
-
      <br>
+     //REQUIRED CREDIT CARD DETAILS FOR PURCHASING EVENT TICKETS
+     h4 Please Enter Credit Card Details
+     label CARDHOLDER NAME:
+     input(name='cardname',type='text',placeholder='Enter search term', id= 'cardname')
+     label CARDNUMBER:
+     input(name='cnum',type='text',placeholder='Enter search term', id= 'cnum')
+     label EXPIRY DATE:
+     input(name='cdate',type='text',placeholder='Enter search term', id= 'cdate')
+     label CVV:
+     input(name='cvv2',type='text',placeholder='Enter search term', id= 'cvv2')
+     <br>
+     // SHOWS PURCHASE SUMMARY
      div.panel.panel-primary
+
          h3.panel.panel-body Purchase Summary
             h4(id = 'event')
             h4(id = 'price')
+            h4(id = 'purchased')
      button.btn.btn-primary(onclick ='buy()') BUY TICKETS
+     //THIS BUTTON TRIGGERS BUY EVENT FUNCTION
      <br>
+     //THIS IS ALL EVENTS AVAILABLE IN THE SYSTEM
      div
          h2 All Events
          table.table-primary.table-bordered.table
@@ -56,6 +76,7 @@ block content
 
      button.btn.btn-primary(onclick ='retrieve()') VIEW ALL
 
+     //TRANSACTION HISTORY OF THE USER PURCHASED TICKETS
      div
          h2 Transaction History
          table.table-primary.table-bordered.table
@@ -72,15 +93,16 @@ block content
 
 
 
-
+        //JAVASCRIPT SECTION THAT PERFORMS GET/POST
         script("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
         script.
+                    //THIS FUNCTION SENDS A GET REQUEST TO SERVER TO RETRIEVE THE EVENTS
                     var retrieve = function () {
                         $.get('/users/allEvents', function (data, status) {
                             var obj = $.parseJSON(data);
 
                             var i =0;
-                            while(i < 20){
+                            while(i < 30){
                                 $('#showname').append(obj[i].name +'<br>');
                                 $('#showven').append(obj[i].venue + '<br>' );
                                 $('#showprice').append(obj[i].price + '.00$' + '<br>' );
@@ -88,12 +110,12 @@ block content
                                 i++;
                             }
 
-
                         });
 
                     }
                     var price =0;
                     var name = 0;
+                    //THIS FUNCTION SENDS A GET REQUEST TO SERVER TO RETRIEVE THE EVENTS BASED ON A SEARCH TERM
                     var search = function () {
                         $.get('/users/searchResult', function (data, status) {
                                 var obj = $.parseJSON(data);
@@ -107,6 +129,7 @@ block content
 
                     var tickets =0;
                     var money =0;
+                    //THESE FUNCTIONS DO THE CALCULATIONS FOR THE TICKET PRICES
                     var add = function(){
                         if (tickets < 20) {
                             tickets += 1;
@@ -124,7 +147,7 @@ block content
                         money = tickets * price;
                         $('#price').text('Total Amount = ' + money + '.00$');
                     }
-
+                    //THIS FUNCTION SENDS A POST REQUEST TO SERVER CONFIRMING THE BUY TICKET USE CASE
                     var buy = function() {
 
                         $.ajax({
@@ -137,10 +160,17 @@ block content
                             },
                             success: function (msg) {
                                 alert('Authorized with your Bank!');
+                                $('#purchased').append('**********************************************************************************' + '<br>');
+                                $('#purchased').append('Ticketholder Information' + '<br>');
+                                for(var i = 0; i < tickets; i++ )
+                                {
+                                    $('#purchased').append('ID: ' + (100 * (i+1) )+ ' -> Event Name:' + name + '- Unit Price: $' + price +'.00 ' + '<br>' );
+                                }
+
                             }
                         });
                     }
-
+                    //THIS FUNCTION SENDS A GET REQUEST TO SERVER TO RETRIEVE THE TICKET HISTORY
                     var show = function () {
                         $.get('/users/showTickets', function (data, status) {
                             var obj = $.parseJSON(data);

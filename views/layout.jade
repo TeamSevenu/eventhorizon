@@ -1,6 +1,9 @@
 doctype html
 html(lang='en')
     head
+        //THIS PAGE DEFINES THE LAYOUT AND LINKS TO NAVIGATE THROUGH ALL THE OTHER PAGES
+            //COMBINES BOOTSTRAP AND CSS TEMPLATES ALONG WITH CONDITIONALS TO LIMIT ACCESS TO SPECIFIC USERS AND
+            //PROVIDE A TEMPLATE TO BASE THE WEBPAGE ON
         title Welcome
         link(href='/stylesheets/bootstrap.css', rel='stylesheet')
         link(href='/stylesheets/style.css', rel='stylesheet')
@@ -14,7 +17,7 @@ html(lang='en')
                         span.icon-bar
                         span.icon-bar
                         span.icon-bars
-                    a.navbar-brand(href='/') Event Horizon
+                    a.navbar-brand(href='/users') Event Horizon
                 .navbar-collapse.collapse
                     ul.nav.navbar-nav
                         if user

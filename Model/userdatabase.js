@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs');
 mongoose.connect('mongodb://localhost/nodeauth');
 
 var db = mongoose.connection;
-
+// USER SCHEMA FOR THE VALUES TO BE INPUT FROM THE SERVER
 var UserSchema = mongoose.Schema({
 
     name:{
@@ -23,9 +23,7 @@ var UserSchema = mongoose.Schema({
     phone:{
         type:String
     },
-    type:{
-        type:String
-    }
+
 });
 
 var userdatabase = module.exports = mongoose.model('userdatabase', UserSchema);

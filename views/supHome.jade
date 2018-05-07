@@ -11,6 +11,7 @@ block content
      h3
         a(href='/servHome') Go To Services
      div
+         //THIS FORM SENDS INFORMATION RELATING TO AN ITEM TO THE SERVER TO BE ADDED TO THE INVENTORY
         h2 Add Item
         form(method ='post', action='/users/addItem')
 
@@ -36,6 +37,7 @@ block content
             input.btn.btn-primary(type = 'submit', name = 'submit',value='ADD!')
      div
          h2 Delete Item
+         //THIS SECTION ALLOWS A USER TO SEARCH FOR AND DELETE AN ITEM FROM THEIR INVENTORY
          form(method ='post', action='/users/deleteItem')
 
              .form-group
@@ -46,6 +48,7 @@ block content
              .form-group
              input.btn.btn-primary(type = 'submit', name = 'submit',value='DELETE!')
              <br>
+             //THIS SECTION ALLOWS THE USER TO SEE THEIR INVENTORY
          h2 All items
             h4
                  ul(id = 'showlist').-list-ul.h4
@@ -66,6 +69,7 @@ block content
         button.btn.btn-primary(onclick ='retrieve()') ALL ITEMS
 
          script.
+             //THIS FUNCTION PERFORMS A GET AND RETRIEVES THE INFORMATION REGARDING THE ITEM INVENTORY SPECIFIC TO THE USER
              var retrieve = function () {
                  $.get('/users/allItems', function (data, status) {
                      var obj = $.parseJSON(data);

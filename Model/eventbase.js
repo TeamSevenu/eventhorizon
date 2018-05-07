@@ -1,9 +1,12 @@
+
+//DATABASE CONNECTION HANDLERS
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/nodeauth');
 
 var db = mongoose.connection;
 
+//SCHEMA FOR DATABASE
 var EventSchema = mongoose.Schema({
 
     name:{
@@ -16,9 +19,6 @@ var EventSchema = mongoose.Schema({
     date:{
         type: Date
     },
-    password:{
-        type:String
-    },
     status: {
         type: String
     },
@@ -27,6 +27,12 @@ var EventSchema = mongoose.Schema({
     },
     price:{
         type:Number
+    },
+    service:{
+        type: String
+    },
+    item:{
+        type:String
     },
     organizer:{
         type: String

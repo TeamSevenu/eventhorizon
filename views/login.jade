@@ -1,9 +1,11 @@
 extends layout
 
+//THIS PAGE REQUIRES LOGIN INFORMATION FROM THE USER
 block content
   .container
     h2.page-header Login
     p Please login below
+    //THIS FORM DEALS WITH SUBMITTING THE INFORMATION INPUTTED BY THE USER BY PERFORMING A POST TO THE SERVER
     form(method ='post', action='/users/login')
         .form-group
         label USERNAME

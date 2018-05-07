@@ -12,61 +12,18 @@
 	"buffers":
 	[
 		{
-			"file": "package.json",
+			"file": "/C/Users/Jayroop/Desktop/INTERNET 457/CORDOVAFINAL/www/index.html",
 			"settings":
 			{
-				"buffer_size": 599,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app.js",
-			"settings":
-			{
-				"buffer_size": 2248,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "views/register.jade",
-			"settings":
-			{
-				"buffer_size": 1171,
+				"buffer_size": 1889,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "views/layout.jade",
+			"file": "/C/Users/Jayroop/Desktop/INTERNET 457/CORDOVAFINAL/www/app.js",
 			"settings":
 			{
-				"buffer_size": 1436,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "routes/users.js",
-			"settings":
-			{
-				"buffer_size": 3538,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "views/index.jade",
-			"settings":
-			{
-				"buffer_size": 85,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "views/error.jade",
-			"settings":
-			{
-				"buffer_size": 84,
+				"buffer_size": 14206,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -111,9 +68,15 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Jayroop/Desktop/INTERNET 457/CORDOVAFINAL/www/index.html",
+		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/views/error.jade",
+		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/views/index.jade",
+		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/routes/users.js",
+		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/views/layout.jade",
+		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/package.json",
+		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/app.js",
 		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/views/register.jade",
 		"/C/Users/Jayroop/Desktop/loginapp-master/loginapp-master/app.js",
-		"/C/Users/Jayroop/Desktop/SOFTWARE 420/EventHorizon/nodeauth/app.js",
 		"/C/Users/Jayroop/Desktop/AUS/Spring 2018/Software Engineering/Labs/OOP Test EvHo/public/classes/Computer.js"
 	],
 	"find":
@@ -149,211 +112,65 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "package.json",
+					"file": "/C/Users/Jayroop/Desktop/INTERNET 457/CORDOVAFINAL/www/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 599,
+						"buffer_size": 1889,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								445,
+								445
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2248,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								75,
-								75
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 468.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "views/register.jade",
+					"buffer": 1,
+					"file": "/C/Users/Jayroop/Desktop/INTERNET 457/CORDOVAFINAL/www/app.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1171,
+						"buffer_size": 14206,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								891,
-								891
+								13931,
+								13931
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "views/layout.jade",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1436,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1402,
-								1402
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 19657.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "routes/users.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3538,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								258,
-								258
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "views/index.jade",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 85,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								35,
-								35
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "views/error.jade",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 84,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							],
-							[
-								43,
-								43
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

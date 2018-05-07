@@ -2,15 +2,17 @@ extends layout
 
 block content
     .container
+        //THIS PAGE DISPLAYS THE SERVICES (HUMAN RESOURCES) THAT A USER CAN ADD TO THEIR INVENTORY
         h1 Services Area
         p Specialize in the services provided
             <br>
         if errors
             each error, i in errors
                 div.alert.alert-danger #{error.msg}
-
+        //USER CAN ADD SERVICE BY INPUTTING THEIR REQUIRED FIELDS
         div
             h2 Add Service
+            //THIS FORM SENDS A POST REQUEST CONTAINING ALL THE INFORMATION FOR SERVICE INVENTORY
             form(method ='post', action='/users/addService')
 
                 .form-group
@@ -70,16 +72,18 @@ block content
 
         div
             h2 Delete Service
+            //THIS SECTION SENDS A POST CONTAINING A SEARCH TERM TO DELETE A SERVICE FROM THE INVENTORY
             form(method ='post', action='/users/deleteService')
 
                 .form-group
                 label SERVICE
-                input.form-control(name='type',type='text',
+                input.form-control(name='title',type='text',
                 placeholder='Enter Service Title')
 
                 .form-group
                 input.btn.btn-primary(type = 'submit', name = 'submit',value='DELETE!')
         div
+            //THIS FUNCTION ALLOWS THE USER TO VIEW ALL THEIR INVENTORY
             h2 Service Inventory
                 table.table-primary.table-bordered.table
                     thead
@@ -95,6 +99,7 @@ block content
 
         button.btn.btn-primary(onclick ='retrieve()') ALL SERVICES
         script.
+            //THESE FUNCTIONS CHOOSE THE FIELDS THAT ARE ACTIVE PER SERVICE TYPE SELECTION
             var cater = function () {
 
 
@@ -130,6 +135,7 @@ block content
                 $('#6').prop("disabled", false).show();
                 $('#7').prop("disabled", false).show();
             }
+            //THIS FUNCTION PERFORMD A GET FUNCTION TO RETRIEVE SERVICES FROM INVENTORY
             var retrieve = function () {
                 $.get('/users/allServices', function (data, status) {
                     var obj = $.parseJSON(data);
